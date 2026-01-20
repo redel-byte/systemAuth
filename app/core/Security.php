@@ -1,5 +1,7 @@
 <?php
 
+namespace Youcode\WorkshopMvc\Core;
+
 /**
  * Security Class
  * Provides various security utilities for the application

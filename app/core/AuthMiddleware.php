@@ -1,5 +1,7 @@
 <?php
 
+namespace Youcode\WorkshopMvc\Core;
+
 /**
  * Middleware for role-based route protection
  * Ensures users are authenticated and have appropriate roles
@@ -127,7 +129,7 @@ class AuthMiddleware
 
     private function redirect(string $url): void
     {
-        $baseUrl = '/Auth';
+        $baseUrl = '/systemAuth';
         $fullUrl = $baseUrl . $url;
         header("Location: {$fullUrl}");
         exit();

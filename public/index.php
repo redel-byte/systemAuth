@@ -1,18 +1,20 @@
 <?php
 
-require_once "../app/core/router.php";
-require_once "../app/core/AuthMiddleware.php";
-require_once __DIR__ . '/../app/controllers/AuthController.php';
-require_once __DIR__ . '/../app/controllers/HomeController.php';
-require_once __DIR__ . '/../app/controllers/CandidateController.php';
-require_once __DIR__ . '/../app/controllers/RecruiterController.php';
-require_once __DIR__ . '/../app/controllers/AdminController.php';
+require_once "../vendor/autoload.php";
+
+use Youcode\WorkshopMvc\Core\Router;
+use Youcode\WorkshopMvc\Core\AuthMiddleware;
+use Youcode\WorkshopMvc\Controllers\AuthController;
+use Youcode\WorkshopMvc\Controllers\HomeController;
+use Youcode\WorkshopMvc\Controllers\CandidateController;
+use Youcode\WorkshopMvc\Controllers\RecruiterController;
+use Youcode\WorkshopMvc\Controllers\AdminController;
 
 // Initialize middleware
 $authMiddleware = new AuthMiddleware();
 
 // Get current request info
-$uri = str_replace("/Auth", "", rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/"));
+$uri = str_replace("/systemAuth", "", rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/"));
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 if ($uri === "") $uri = "/";
 
@@ -24,40 +26,40 @@ if (!$authMiddleware->handle($uri, $method)) {
 $router = new Router();
 
 // Public Routes - Main Home Page
-$router->addRouter('GET', '/', ['HomeController', 'index']);
-$router->addRouter('GET', '/home', ['HomeController', 'index']);
-$router->addRouter('GET', '/find-talent', ['HomeController', 'findTalent']);
-$router->addRouter('GET', '/find-jobs', ['HomeController', 'findJobs']);
+$router->addRouter('GET', '/', [HomeController::class, 'index']);
+$router->addRouter('GET', '/home', [HomeController::class, 'index']);
+$router->addRouter('GET', '/find-talent', [HomeController::class, 'findTalent']);
+$router->addRouter('GET', '/find-jobs', [HomeController::class, 'findJobs']);
 
 // Authentication Routes
-$router->addRouter('GET', '/login', ['AuthController', 'loginForm']);
-$router->addRouter('POST', '/login', ['AuthController', 'login']);
-$router->addRouter('GET', '/register', ['AuthController', 'registerForm']);
-$router->addRouter('POST', '/register', ['AuthController', 'register']);
-$router->addRouter('GET', '/logout', ['AuthController', 'logout']);
+$router->addRouter('GET', '/login', [AuthController::class, 'loginForm']);
+$router->addRouter('POST', '/login', [AuthController::class, 'login']);
+$router->addRouter('GET', '/register', [AuthController::class, 'registerForm']);
+$router->addRouter('POST', '/register', [AuthController::class, 'register']);
+$router->addRouter('GET', '/logout', [AuthController::class, 'logout']);
 
 // Candidate Routes
-$router->addRouter('GET', '/candidate', ['CandidateController', 'dashboard']);
-$router->addRouter('GET', '/candidate/dashboard', ['CandidateController', 'dashboard']);
-$router->addRouter('GET', '/candidate/profile', ['CandidateController', 'profile']);
-$router->addRouter('GET', '/candidate/applications', ['CandidateController', 'applications']);
-$router->addRouter('GET', '/candidate/settings', ['CandidateController', 'settings']);
+$router->addRouter('GET', '/candidate', [CandidateController::class, 'dashboard']);
+$router->addRouter('GET', '/candidate/dashboard', [CandidateController::class, 'dashboard']);
+$router->addRouter('GET', '/candidate/profile', [CandidateController::class, 'profile']);
+$router->addRouter('GET', '/candidate/applications', [CandidateController::class, 'applications']);
+$router->addRouter('GET', '/candidate/settings', [CandidateController::class, 'settings']);
 
 // Recruiter Routes
-$router->addRouter('GET', '/recruiter', ['RecruiterController', 'dashboard']);
-$router->addRouter('GET', '/recruiter/dashboard', ['RecruiterController', 'dashboard']);
-$router->addRouter('GET', '/recruiter/jobs', ['RecruiterController', 'jobs']);
-$router->addRouter('GET', '/recruiter/candidates', ['RecruiterController', 'candidates']);
-$router->addRouter('GET', '/recruiter/company', ['RecruiterController', 'company']);
-$router->addRouter('GET', '/recruiter/settings', ['RecruiterController', 'settings']);
+$router->addRouter('GET', '/recruiter', [RecruiterController::class, 'dashboard']);
+$router->addRouter('GET', '/recruiter/dashboard', [RecruiterController::class, 'dashboard']);
+$router->addRouter('GET', '/recruiter/jobs', [RecruiterController::class, 'jobs']);
+$router->addRouter('GET', '/recruiter/candidates', [RecruiterController::class, 'candidates']);
+$router->addRouter('GET', '/recruiter/company', [RecruiterController::class, 'company']);
+$router->addRouter('GET', '/recruiter/settings', [RecruiterController::class, 'settings']);
 
 // Admin Routes
-$router->addRouter('GET', '/admin', ['AdminController', 'dashboard']);
-$router->addRouter('GET', '/admin/dashboard', ['AdminController', 'dashboard']);
-$router->addRouter('GET', '/admin/users', ['AdminController', 'users']);
-$router->addRouter('GET', '/admin/roles', ['AdminController', 'roles']);
-$router->addRouter('GET', '/admin/system', ['AdminController', 'system']);
-$router->addRouter('GET', '/admin/logs', ['AdminController', 'logs']);
+$router->addRouter('GET', '/admin', [AdminController::class, 'dashboard']);
+$router->addRouter('GET', '/admin/dashboard', [AdminController::class, 'dashboard']);
+$router->addRouter('GET', '/admin/users', [AdminController::class, 'users']);
+$router->addRouter('GET', '/admin/roles', [AdminController::class, 'roles']);
+$router->addRouter('GET', '/admin/system', [AdminController::class, 'system']);
+$router->addRouter('GET', '/admin/logs', [AdminController::class, 'logs']);
 
 // Error Routes
 $router->addRouter('GET', '/403', function() {

@@ -1,16 +1,17 @@
-
 <?php
 
-require_once __DIR__ . '/../core/database.php';
-require_once __DIR__ . '/../models/User.php';
-require_once __DIR__ . '/../core/Validator.php';
+namespace Youcode\WorkshopMvc\Controllers;
+
+use Youcode\WorkshopMvc\Core\Database;
+use Youcode\WorkshopMvc\Models\User;
+use Youcode\WorkshopMvc\Core\Validator;
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  header('Location: /Auth/login');
+  header('Location: /systemAuth/login');
   exit();
 }
 
@@ -20,7 +21,7 @@ $password = $_POST['password'] ?? '';
 if (empty($email) || empty($password) || !Validator::validateEmail($email)) {
   $_SESSION['error'] = 'Please provide a valid email and password.';
   $_SESSION['old_email'] = $email;
-  header('Location: /Auth/login');
+  header('Location: /systemAuth/login');
   exit();
 }
 

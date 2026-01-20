@@ -1,5 +1,7 @@
 <?php
 
+namespace Youcode\WorkshopMvc\Core;
+
 class Hashpassword{
   public string $password_hached;
   

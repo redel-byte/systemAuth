@@ -1,4 +1,7 @@
 <?php
+
+namespace Youcode\WorkshopMvc\Core;
+
 class Validator
 {
     // regex for text (allows letters and spaces)

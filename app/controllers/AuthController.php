@@ -1,11 +1,13 @@
 <?php
 
-require_once __DIR__ . '/../core/controller.php';
-require_once __DIR__ . '/../core/database.php';
-require_once __DIR__ . '/../models/User.php';
-require_once __DIR__ . '/../core/Validator.php';
-require_once __DIR__ . '/../core/CSRFProtection.php';
-require_once __DIR__ . '/../core/Security.php';
+namespace Youcode\WorkshopMvc\Controllers;
+
+use Youcode\WorkshopMvc\Core\Controller;
+use Youcode\WorkshopMvc\Core\Database;
+use Youcode\WorkshopMvc\Models\User;
+use Youcode\WorkshopMvc\Core\Validator;
+use Youcode\WorkshopMvc\Core\CSRFProtection;
+use Youcode\WorkshopMvc\Core\Security;
 
 class AuthController extends Controller
 {
@@ -142,14 +144,14 @@ class AuthController extends Controller
     public function register()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         // Validate CSRF token
         if (!CSRFProtection::validateRequest()) {
             $_SESSION['error'] = 'Invalid request. Please try again.';
             Security::logSecurityEvent('CSRF token validation failed during registration', ['email' => $_POST['email'] ?? '']);
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         $email = Security::sanitize(trim($_POST['email'] ?? ''));
@@ -163,40 +165,40 @@ class AuthController extends Controller
         if (!Security::checkRateLimit('register_' . Security::getClientIP(), 3, 3600)) {
             $_SESSION['error'] = 'Too many registration attempts. Please try again later.';
             Security::logSecurityEvent('Registration rate limit exceeded', ['ip' => Security::getClientIP()]);
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         // Input validation
         if (!Security::isValidEmail($email)) {
             $_SESSION['error'] = 'Please provide a valid email address.';
             $_SESSION['old_email'] = $email;
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         if ($password !== $confirm) {
             $_SESSION['error'] = 'Passwords do not match.';
             $_SESSION['old_email'] = $email;
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         if (!Security::isStrongPassword($password)) {
             $_SESSION['error'] = 'Password must be at least 8 characters and contain letters and numbers.';
             $_SESSION['old_email'] = $email;
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         // Validate role
         if (!in_array($role, ['candidate', 'recruiter'])) {
             $_SESSION['error'] = 'Invalid role selected.';
             $_SESSION['old_email'] = $email;
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         // Check if email already exists
         if ($this->userModel->findByEmail($email)) {
             $_SESSION['error'] = 'Email already registered.';
             $_SESSION['old_email'] = $email;
-            $this->redirect('/Auth/register');
+            $this->redirect('/systemAuth/register');
         }
 
         // Create user
@@ -210,7 +212,7 @@ class AuthController extends Controller
             
             $_SESSION['success'] = 'Account created successfully. You can now log in.';
             CSRFProtection::clearToken();
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         Security::logSecurityEvent('User registration failed', [
@@ -221,7 +223,7 @@ class AuthController extends Controller
 
         $_SESSION['error'] = 'Failed to create account. Please try again.';
         $_SESSION['old_email'] = $email;
-        $this->redirect('/Auth/register');
+        $this->redirect('/systemAuth/register');
     }
 
     public function logout()
@@ -230,29 +232,29 @@ class AuthController extends Controller
         if (session_id() !== '') {
             session_destroy();
         }
-        $this->redirect('/Auth/login');
+        $this->redirect('/systemAuth/login');
     }
 
     public function home()
     {
         if (!isset($_SESSION['user_id'])) {
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         // Redirect to role-specific dashboard
         $role = $_SESSION['role'] ?? 'candidate';
         switch ($role) {
             case 'candidate':
-                $this->redirect('/Auth/candidate/dashboard');
+                $this->redirect('/systemAuth/candidate/dashboard');
                 break;
             case 'recruiter':
-                $this->redirect('/Auth/recruiter/dashboard');
+                $this->redirect('/systemAuth/recruiter/dashboard');
                 break;
             case 'admin':
-                $this->redirect('/Auth/admin/dashboard');
+                $this->redirect('/systemAuth/admin/dashboard');
                 break;
             default:
-                $this->redirect('/Auth/login');
+                $this->redirect('/systemAuth/login');
                 break;
         }
     }

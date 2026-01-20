@@ -1,5 +1,7 @@
 <?php
 
+namespace Youcode\WorkshopMvc\Core;
+
 /**
  * CSRF Protection Class
  * Provides Cross-Site Request Forgery protection tokens

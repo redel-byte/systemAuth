@@ -6,7 +6,7 @@
     <title>TalentHub - Authentication</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="/Auth/app/views/assets/main.js"></script>
+    <script defer src="/systemAuth/app/views/assets/main.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -120,10 +120,10 @@
             
             <!-- Auth Buttons (for logged out state) -->
             <div class="flex space-x-4">
-                <a href="/Auth/login" class="bg-white text-purple-700 font-semibold py-2 px-6 rounded-lg transition duration-300 hover:bg-gray-100">
+                <a href="/systemAuth/login" class="bg-white text-purple-700 font-semibold py-2 px-6 rounded-lg transition duration-300 hover:bg-gray-100">
                     Sign In
                 </a>
-                <a href="/Auth/register" class="glass-effect text-white font-semibold py-2 px-6 rounded-lg transition duration-300 hover:bg-white hover:bg-opacity-20">
+                <a href="/systemAuth/register" class="glass-effect text-white font-semibold py-2 px-6 rounded-lg transition duration-300 hover:bg-white hover:bg-opacity-20">
                     Sign Up
                 </a>
             </div>
@@ -219,7 +219,7 @@
                             $success = $success ?? null;
                             $show_signup = $show_signup ?? false;
                             ?>
-                            <form id="loginFormElement" action="/Auth/login" method="post">
+                            <form id="loginFormElement" action="/systemAuth/login" method="post">
                                 <!-- CSRF Token -->
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token ?? '') ?>">
                                 
@@ -289,7 +289,7 @@
                                 <p class="text-gray-600">Don't have an account? 
                                     <button id="switchToSignup" class="text-purple-600 hover:text-purple-800 font-medium">Sign up here</button>
                                     <span> or </span>
-                                    <a href="/Auth/register" class="text-purple-600 hover:text-purple-800 font-medium">Go to registration page</a>
+                                    <a href="/systemAuth/register" class="text-purple-600 hover:text-purple-800 font-medium">Go to registration page</a>
                                 </p>
                             </div>
                         </div>
@@ -303,7 +303,7 @@
                                 <p class="text-gray-600 mt-2">Create your account in less than 2 minutes</p>
                             </div>
                             
-                            <form id="signupFormElement" action="/Auth/register" method="post">
+                            <form id="signupFormElement" action="/systemAuth/register" method="post">
                                 <!-- CSRF Token -->
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token ?? '') ?>">
                                 

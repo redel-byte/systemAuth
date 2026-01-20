@@ -1,8 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../core/controller.php';
-require_once __DIR__ . '/../core/database.php';
-require_once __DIR__ . '/../models/User.php';
+namespace Youcode\WorkshopMvc\Controllers;
+
+use Youcode\WorkshopMvc\Core\Controller;
+use Youcode\WorkshopMvc\Core\Database;
+use Youcode\WorkshopMvc\Models\User;
 
 class AdminController extends Controller
 {
@@ -21,7 +23,7 @@ class AdminController extends Controller
     {
         $user = $this->getCurrentUser();
         if (!$user) {
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         $this->view('admin/dashboard', [
@@ -34,7 +36,7 @@ class AdminController extends Controller
     {
         $user = $this->getCurrentUser();
         if (!$user) {
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         $this->view('admin/users', [
@@ -47,7 +49,7 @@ class AdminController extends Controller
     {
         $user = $this->getCurrentUser();
         if (!$user) {
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         $this->view('admin/roles', [
@@ -60,7 +62,7 @@ class AdminController extends Controller
     {
         $user = $this->getCurrentUser();
         if (!$user) {
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         $this->view('admin/system', [
@@ -73,7 +75,7 @@ class AdminController extends Controller
     {
         $user = $this->getCurrentUser();
         if (!$user) {
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         $this->view('admin/logs', [
@@ -95,12 +97,12 @@ class AdminController extends Controller
     {
         if (!$this->isLoggedIn()) {
             $_SESSION['error'] = 'Please login to access this page.';
-            $this->redirect('/Auth/login');
+            $this->redirect('/systemAuth/login');
         }
 
         if (!isset($_SESSION['role']) || $_SESSION['role'] !== $requiredRole) {
             $_SESSION['error'] = 'Access denied. Insufficient permissions.';
-            $this->redirect('/Auth/403');
+            $this->redirect('/systemAuth/403');
         }
     }
 }

@@ -16,7 +16,7 @@ class ComposerStaticInit3b3f2aa74f1c48c912a8a02edba24055
     public static $prefixDirsPsr4 = array (
         'Youcode\\WorkshopMvc\\' =>
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/app',
         ),
     );
 

@@ -1,4 +1,7 @@
 <?php
+
+namespace Youcode\WorkshopMvc\Core;
+
 class Router
 {
   protected $routes = [];
@@ -6,7 +9,7 @@ class Router
   protected string $currentMethod;
 
   public function __construct() {
-    $this->currentURI = str_replace("/Auth","",rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/"));
+    $this->currentURI = str_replace("/systemAuth","",rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/"));
     $this->currentMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
   }
   public function addRouter(string $method, string $path, $action): void
@@ -29,11 +32,11 @@ class Router
     if (is_array($action)) {
       [$controller, $method] = $action;
       if (!class_exists($controller)) {
-        throw new Exception("[!] Class Not Found.\n$controller");
+        throw new \Exception("[!] Class Not Found.\n$controller");
       }
       $instance = new $controller;
       if (!method_exists($instance, $method)) {
-        throw new Exception("[!] Method Not Found.\n$method");
+        throw new \Exception("[!] Method Not Found.\n$method");
       }
       $instance->$method();
       return;
@@ -42,7 +45,7 @@ class Router
       $action();
       return;
     }
-    throw new Exception("[!] Invalid action $action");
+    throw new \Exception("[!] Invalid action $action");
   }
   protected function notFound(): void
   {

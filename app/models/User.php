@@ -1,8 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../core/database.php';
-require_once __DIR__ . '/../core/hash_password.php';
-require_once __DIR__ . '/../core/Validator.php';
+namespace Youcode\WorkshopMvc\Models;
+
+use Youcode\WorkshopMvc\Core\Database;
+use Youcode\WorkshopMvc\Core\Hashpassword;
+use Youcode\WorkshopMvc\Core\Validator;
 
 class User
 {

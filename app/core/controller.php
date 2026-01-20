@@ -1,5 +1,7 @@
 <?php
 
+namespace Youcode\WorkshopMvc\Core;
+
 /**
  * Base Controller
  * All controllers should extend this class
@@ -27,7 +29,7 @@ class Controller
      */
     protected function redirect($url)
     {
-        $baseUrl = '/Auth';
+        $baseUrl = '/systemAuth';
         $fullUrl = $baseUrl . $url;
         header("Location: {$fullUrl}");
         exit();

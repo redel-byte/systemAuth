@@ -162,7 +162,7 @@ auth-workshop/
     └────────────┬───────────────┘
                  ↓
     ┌────────────────────────────┐
-    │ views/auth/login.php │
+    │ views/systemAuth/login.php │
     │ (HTML Template) │
     └────────────┬───────────────┘
                  ↓

@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <base href="/Auth/">
+    <base href="/systemAuth/">
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -342,7 +342,7 @@
                 Join thousands of professionals and companies who are already finding success on TalentHub.
             </p>
             <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
-                <a href="/Auth/register" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg inline-block">
+                <a href="/systemAuth/register" class="btn-primary text-white font-semibold py-3 px-8 rounded-lg inline-block">
                     <i class="fas fa-user-plus mr-2"></i> Sign Up Now
                 </a>
                 <a href="#" class="glass-effect text-white font-semibold py-3 px-8 rounded-lg inline-block hover:bg-white hover:bg-opacity-20 transition">
